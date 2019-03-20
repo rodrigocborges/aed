@@ -1,4 +1,4 @@
-#define TAM 12
+#define TAM 12 //tamanho inicial da lista estática
 
 typedef struct lista {
 	int inicio;

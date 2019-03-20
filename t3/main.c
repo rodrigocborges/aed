@@ -24,6 +24,10 @@ int main(){
 	inserir(6565, l);
 	inserir(23232, l);
 	inserir(123456, l); //insere valor na lista sempre na ultima posicao
+	apagar(3, l);
+	apagar(4, l);
+	apagar(8, l);
+	apagar(10, l);
 	destroi(l); //desaloca lista da memoria
 	return 0;
 }

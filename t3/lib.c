@@ -14,14 +14,14 @@ Lista* define(size_t tam, int* val){
 		l->itens[i] = val[i];
 	}
 	return l;
-}
+} //inicializa lista
 
 void inserir(int n, Lista* l){
 	++l->fim; //aumenta final da lista
 	l->itens = (int*)realloc(l->itens, l->fim * sizeof(int));  //realoca memoria para caber mais numeros
 	l->itens[l->fim - 1] = n;		
 	exibe(l);
-}
+} //insere valor na ultima posicao
 
 void alterar(int pos, int n, Lista* l){
 	if(pos < l->inicio || pos > l->fim - 1){
@@ -30,7 +30,7 @@ void alterar(int pos, int n, Lista* l){
 		l->itens[pos] = n;
 		exibe(l);
 	}
-}
+} //altera valor diretamente na posicao selecionada
 
 int menorValor(Lista* l){
 	int aux = maiorValor(l);
@@ -39,7 +39,7 @@ int menorValor(Lista* l){
 			aux = l->itens[i];
 	}
 	return aux;
-}
+} //retorna menor valor da lista
 
 int maiorValor(Lista* l){
 	int aux = 0;
@@ -48,19 +48,20 @@ int maiorValor(Lista* l){
 			aux = l->itens[i];
 	}
 	return aux;
-}
+} //retorna maior valor da lista
 
 void exibe(Lista* l){
 	printf("\n-------------Exibindo valores da lista-------------\n");
-	for(int i = l->inicio; i < l->fim; i++){		
-		printf("[%d] %d\n", i, l->itens[i]);	
+	for(int i = l->inicio; i < l->fim; i++){	
+		if(l->itens[i] != -1)	
+			printf("[%d] %d\n", i, l->itens[i]);	
 	}
 	printf("\nValor inicial: %d", l->itens[l->inicio]);
 	printf("\nValor final: %d", l->itens[l->fim - 1]);
 	printf("\nMenor: %d", menorValor(l));
 	printf("\nMaior: %d\n", maiorValor(l));
 	printf("\n----------------------------------------------------\n");
-}
+} //gera uma grid para mostrar todos os dados da lista
 
 int busca(int n, Lista* l){
 	for(int i = l->inicio; i < l->fim; i++){
@@ -71,7 +72,7 @@ int busca(int n, Lista* l){
 	}
 	printf("\nValor (%d) referenciado nao encontrado!\n", n);
 	return -1;
-}
+} //busca determinado valor na lista e retorna sua posicao, caso houver algum erro retorna -1
 
 int apagar(int pos, Lista* l) {
 	if(pos < l->inicio || pos > l->fim - 1){
@@ -81,8 +82,8 @@ int apagar(int pos, Lista* l) {
 		printf("\nPosicao %d apagada!\n", pos);	
 	}
 	return 0;
-}
+} //apaga determinado valor indicando sua posicao
 
 void destroi(Lista* l){
 	free(l);
-}
+} //desaloca memoria
