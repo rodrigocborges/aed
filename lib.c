@@ -15,16 +15,50 @@ Lista* define(size_t tam, int* val){
 	return l;
 }
 
+void inserir(int pos, int n, Lista* l){
+	if(pos >= TAM){
+		printf("\nNao eh possivel adicionar mais elementos\n");
+	}else {
+		++l->fim;
+		l->itens[l->fim - 1] = n;
+		exibe(l);
+	}
+} //TODO: adiciona só no final, arrumar para add pela posicao
+
+void alterar(int pos, int n, Lista* l){
+	apagar(pos, l);
+	l->itens[pos] = n;
+	exibe(l);
+}
+
+int menorValor(Lista* l){
+	int aux = maiorValor(l);
+	for(int i = l->inicio; i < l->fim; i++){
+		if(l->itens[i] <= aux)
+			aux = l->itens[i];
+	}
+	return aux;
+}
+
+int maiorValor(Lista* l){
+	int aux = 0;
+	for(int i = l->inicio; i < l->fim; i++){
+		if(l->itens[i] > aux)
+			aux = l->itens[i];
+	}
+	return aux;
+}
+
 void exibe(Lista* l){
-	printf("\nExibindo valores da lista:\n");
+	printf("\n-------------Exibindo valores da lista-------------\n");
 	for(int i = l->inicio; i < l->fim; i++){		
 		printf("[%d] %d\n", i, l->itens[i]);	
 	}
-	printf("\nValor inicial: %d | Valor final: %d | Tamanho: %d\n", l->itens[l->inicio], l->itens[l->fim - 1], l->fim);
-}
-
-void verifica(int n1, int n2, Lista* l){
-	
+	printf("\nValor inicial: %d", l->itens[l->inicio]);
+	printf("\nValor final: %d", l->itens[l->fim - 1]);
+	printf("\nMenor: %d", menorValor(l));
+	printf("\nMaior: %d\n", maiorValor(l));
+	printf("\n----------------------------------------------------\n");
 }
 
 int busca(int n, Lista* l){
@@ -39,7 +73,12 @@ int busca(int n, Lista* l){
 }
 
 int apagar(int pos, Lista* l) {
-	l->itens[pos] = -1;
+	if(pos < l->inicio || pos > l->fim - 1){
+		printf("\nPosicao invalida, tente novamente!\n");
+	}else {
+		l->itens[pos] = -1;	
+		printf("\nPosicao %d apagada!\n", pos);	
+	}
 	return 0;
 }
 
