@@ -2,14 +2,16 @@
 #include <stdlib.h>
 #include "lib.h"
 
+/*Lista contiguidade física com descritor*/
 void checaValores(Lista* l, int visualiza){
+  l->menor = l->maior;
   for(int i = l->inicio; i < l->fim; i++){
     if(l->itens[i] > l->maior){
       l->maior = l->itens[i];
-    }else if(l->itens[i] <= l->menor){
+    }else if(l->itens[i] < l->menor){
       l->menor = l->itens[i];
     }
-    if(visualiza == 1){
+    if(visualiza == 1 && l->itens[i] != -1){
       printf("[%2d] %d\n", i, l->itens[i]);
     }
   }
@@ -51,6 +53,12 @@ int visualiza(Lista* l){
   return 1;
 }
 
+int del(Lista* l, int pos){
+  if(l == NULL) return 0;
+  add(l, pos, -1);
+  return 1;
+}
+
 int maior(Lista* l){
   if(l == NULL) return 0;
   return l->maior;
@@ -59,4 +67,47 @@ int maior(Lista* l){
 int menor(Lista* l){
   if(l == NULL) return 0;
   return l->menor;
+}
+
+int destroi(Lista* l){
+  if(l == NULL) return 0;
+  free(l);
+  return 1;
+}
+
+/*Lista com ocupação circular*/
+ListaCircular* criaLC(){
+  ListaCircular* lc = (ListaCircular*)malloc(sizeof(ListaCircular));
+  if(lc == NULL){
+    printf("Erro de alocacao de memoria!\n");
+  }else {
+    lc->num = -1;
+    lc->prim = lc->prim;
+    lc->prox = lc->prim;
+  }
+  return lc;
+}
+int addLC(ListaCircular* l, int n){
+  if(l == NULL) return 0;
+  ListaCircular* current = l;
+  while(current->prox != NULL){
+    current = current->prox;
+  }
+  current->prox = (ListaCircular*)malloc(sizeof(ListaCircular));
+  current->prox->num = n;
+  current->prox->prox = l->prim;
+  return 1;
+}
+
+int visualizaLC(ListaCircular* l){
+  if(l == NULL) return 0;
+  ListaCircular* current = l;
+  int id = -1;
+  printf("\nExibindo valores da lista circular: \n");
+  while(current->prox != NULL){
+    id++;
+    printf("[%2d] %d\n", id, current->prox->num);
+    current = current->prox;
+  }
+  return 1;
 }
